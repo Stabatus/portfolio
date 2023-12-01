@@ -1,9 +1,106 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Testimonials from "@/comp/testionmials/testimonials.astro";
+import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
+import CERTIFIED_DESIGNER_SVG from "#/home/certified-designer.svg";
+import { getEntries } from "astro:content";
+
+const homeEntries = await getCollection("home");
+
+const {
+  title,
+  description,
+  lastUpdate,
+  schools,
+  testimonials,
+  relatedProject
+} = homeEntries[0].data;
+
+const projectData = await getEntries(relatedProject);
+
+const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+}).format(lastUpdate);
+
+//faire un tableau de 6 chiffres uniques aléatoires partant de 1 à 9
+const randomNumbers: number[] = [];
+
+while (randomNumbers.length < 7) {
+  const randomNumber = Math.floor(Math.random() * 9) + 1;
+  if (!randomNumbers.includes(randomNumber)) {
+    randomNumbers.push(randomNumber);
+  }
+}
 ---
 
-<Layout title="Welcome to Astro.">
-  <section>
-    <h1>Designer</h1>
-  </section>
+<Layout title="Ruben Letist - Digital Creative">
+  <header>
+    <section>
+      <strong>Ruben Letist</strong>
+      <nav>
+        <a href="#">Curriculum vitae</a>
+        <a href="#">Instagram</a>
+        <a href="#">Linkedin</a>
+      </nav>
+    </section>
+
+    <section>
+      <div>
+        <p>
+          Dernière mise à jour : {lastDayPublish}
+        </p>
+        <p>{description}</p>
+      </div>
+      <h1>{title}</h1>
+    </section>
+    <hr />
+    <section>
+      <div>
+        <Image
+          src={CERTIFIED_DESIGNER_SVG}
+          alt="Logo parodique de certified designer"
+        />
+        <div>
+          {
+            schools.map(([title, location]) => {
+              return (
+                <p>
+                  {title}
+                  <strong>{location}</strong>
+                </p>
+              );
+            })
+          }
+        </div>
+        <div>
+          {
+            randomNumbers.slice(0, 3).map((i, index) => {
+              const [Author, Quote] = testimonials[i];
+              return (
+                <Testimonials
+                  author={Author}
+                  quote={Quote}
+                />
+              );
+            })
+          }
+        </div>
+        {
+          projectData.map(({ data }) => {
+            const { title, subTitle } = data;
+            return (
+              <WorkHighlight
+                title={title}
+                description={subTitle}
+              />
+            );
+          })
+        }
+      </div>
+    </section>
+  </header>
 </Layout>
