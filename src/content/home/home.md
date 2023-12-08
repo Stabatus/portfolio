@@ -1,5 +1,6 @@
 ---
 title: Digital Designer and Creative Developper
+
 description: Avec cinq ans d'expérience en tant que designer UI/UX au sein d'une société de développement logiciel, j'ai allié mes compétences issues d'un bachelier technique et d'un master en arts. Mon parcours académique et professionnel converge pour créer des interfaces utilisateur performantes et esthétiques.
 lastUpdate: 2023-12-01
 
@@ -47,8 +48,8 @@ testimonials:
   ]
 
 relatedProject:
-  - hygie # references `src/content/projects/hygie.md`
   - hygie-epiox-mobile # references `src/content/projects/hygie-epiox-mobile.md`
+  - hygie # references `src/content/projects/hygie.md`
   - hygie-epiox # references `src/content/projects/hygie-epiox.md`
   - owltrip # references `src/content/projects/owltrip.md`
   - playground # references `src/content/projects/playground.md`

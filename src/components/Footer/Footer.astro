@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import RUBEN_LOGO from "#/ruben-logo.svg";
+
+const todaysYear = new Date().getFullYear();
+---
+
+<footer>
+  <img
+    src="/backgroundPerlin-white.png"
+    alt="Background Perlin Noise"
+  />
+  <div>
+    <div>
+      <Image
+        class="footer__logo"
+        src={RUBEN_LOGO}
+        alt="Logo de Ruben Letist, designer digital et creative developer"
+      />
+      <p>
+        ©{todaysYear} Ruben Letist.<br />
+        <span>Design and dev with love and a lot of coffee</span>
+      </p>
+    </div>
+    <nav>
+      <a href="#">Curriculum Vitae</a>
+      <a href="#">Instagram</a>
+      <a href="#">Linkedin</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    height: 31rem;
+    background-color: hsla(0, 0%, 14%, 1);
+    border-radius: 2.4rem 2.4rem 0 0;
+    position: relative;
+    color: var(--white-color);
+    padding-right: 7.4rem;
+    padding-left: 7.4rem;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+  }
+  footer > div {
+    width: 164rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--color-gray-300);
+  }
+
+  footer nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.6rem;
+  }
+
+  footer > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.1;
+  }
+
+  .footer__logo {
+    height: 7.4rem;
+    width: auto;
+    margin-bottom: 2.4rem;
+  }
+
+  span {
+    color: var(--grey-color);
+  }
+</style>

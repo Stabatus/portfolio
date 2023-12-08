@@ -8,7 +8,7 @@ interface Props
   link?: string;
 }
 
-const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
+const { title, link, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
 ---
 
 <a href="#">
@@ -37,12 +37,9 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
     --hero-transition: 300ms ease-out;
   }
 
-  a:nth-child(2) {
-    width: 50%;
-  }
 
   a {
-    --hero-Grey-color: hsla(0, 0%, 14%, 1);
+    --hero-Grey-color: rgb(82, 82, 82);
     all: unset;
     display: block;
     background-color: var(--hero-Grey-color);
@@ -51,14 +48,12 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
     overflow: hidden;
     transition: var(--hero-transition);
     cursor: pointer;
-    border: var(--grey-color) 0.2rem solid;
     transition: var(--hero-transition);
-    height: 50rem;
+    height: 30rem;
     flex: auto;
   }
 
   a:hover {
-    border: var(--white-color) 0.2rem solid;
     translate: 0 -0.4rem;
   }
 

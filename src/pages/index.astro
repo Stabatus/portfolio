@@ -1,11 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import Testimonials from "@/comp/testionmials/testimonials.astro";
-import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
-import CERTIFIED_DESIGNER_SVG from "#/home/certified-designer.svg";
 import { getEntries } from "astro:content";
+import ParodyCertified from "@/comp/ParodyCertified/ParodyCertified.astro";
+import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
+import Work from "@/comp/Work/Work.astro";
+import TestimonialsContainer from "@/src/components/testionmials/TestimonialsContainer.astro";
 
 const homeEntries = await getCollection("home");
 
@@ -15,7 +15,8 @@ const {
   lastUpdate,
   schools,
   testimonials,
-  relatedProject
+  relatedProject,
+  cta
 } = homeEntries[0].data;
 
 const projectData = await getEntries(relatedProject);
@@ -26,20 +27,22 @@ const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   day: "numeric"
 }).format(lastUpdate);
 
-//faire un tableau de 6 chiffres uniques aléatoires partant de 1 à 9
 const randomNumbers: number[] = [];
 
 while (randomNumbers.length < 7) {
-  const randomNumber = Math.floor(Math.random() * 9) + 1;
+  const randomNumber = Math.floor(Math.random() * 9);
   if (!randomNumbers.includes(randomNumber)) {
     randomNumbers.push(randomNumber);
   }
 }
+
+const firstStack = randomNumbers.slice(0, 3) as [number, number, number];
+const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 ---
 
 <Layout title="Ruben Letist - Digital Creative">
   <header>
-    <section>
+    <section class="nav_container">
       <strong>Ruben Letist</strong>
       <nav>
         <a href="#">Curriculum vitae</a>
@@ -48,59 +51,149 @@ while (randomNumbers.length < 7) {
       </nav>
     </section>
 
-    <section>
+    <section class="hero">
       <div>
+        <p>{description}</p>
         <p>
           Dernière mise à jour : {lastDayPublish}
         </p>
-        <p>{description}</p>
       </div>
-      <h1>{title}</h1>
+      <h1>Digital Designer <br />and Creative Developper</h1>
     </section>
     <hr />
-    <section>
-      <div>
-        <Image
-          src={CERTIFIED_DESIGNER_SVG}
-          alt="Logo parodique de certified designer"
-        />
-        <div>
-          {
-            schools.map(([title, location]) => {
-              return (
-                <p>
-                  {title}
-                  <strong>{location}</strong>
-                </p>
-              );
-            })
-          }
-        </div>
-        <div>
-          {
-            randomNumbers.slice(0, 3).map((i, index) => {
-              const [Author, Quote] = testimonials[i];
-              return (
-                <Testimonials
-                  author={Author}
-                  quote={Quote}
-                />
-              );
-            })
-          }
-        </div>
-        {
-          projectData.map(({ data }) => {
-            const { title, subTitle } = data;
-            return (
-              <WorkHighlight
-                title={title}
-                description={subTitle}
-              />
-            );
-          })
-        }
-      </div>
-    </section>
+    <footer>
+      <ParodyCertified schools={schools} />
+      <TestimonialsContainer
+        testimonials={testimonials}
+        randomNumberStack={firstStack}
+      />
+    </footer>
   </header>
+  <main>
+    <nav class="project_highlight">
+      {
+        projectData.slice(0, 2).map(({ data }) => {
+          const { title, subTitle, heroImage, timing } = data;
+          return (
+            <WorkHighlight
+              title={title}
+              subTitle={subTitle}
+              heroImage={heroImage}
+              timing={timing}
+            />
+          );
+        })
+      }
+    </nav>
+    <div>
+      <TestimonialsContainer
+        testimonials={testimonials}
+        randomNumberStack={secondStack}
+      />
+    </div>
+    <nav class="projects">
+      {
+        projectData.slice(2, 5).map(({ data }) => {
+          const { title, subTitle, heroImage, timing } = data;
+          return (
+            <Work
+              title={title}
+              subTitle={subTitle}
+              heroImage={heroImage}
+              timing={timing}
+            />
+          );
+        })
+      }
+    </nav>
+    <section class="aboutme">
+      
+    </section>
+  </main>
 </Layout>
+
+<style>
+  section.nav_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 0;
+  }
+
+  section.nav_container nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  h1 {
+    font-size: 6.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 769px) {
+    h1 {
+      font-size: 9.6rem;
+    }
+  }
+  header {
+    margin-bottom: 2.4rem;
+  }
+
+  header > footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  hr {
+    margin-top: 2.4rem;
+    margin-bottom: 2.4rem;
+  }
+
+  section.hero {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: 40dvh;
+  }
+
+  section.hero div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  section.hero p {
+    max-width: 35ch;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: var(--grey-color);
+  }
+
+  nav.project_highlight,
+  nav.projects {
+    display: flex;
+    flex-direction: row;
+    gap: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  nav.projects {
+    margin-top: 1.6rem;
+    margin-bottom: 4.8rem;
+  }
+
+  section.aboutme {
+    margin-bottom: 4.8rem;
+    display: flex;
+    justify-content: center;
+  }
+
+</style>

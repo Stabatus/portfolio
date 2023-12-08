@@ -2,10 +2,7 @@
 title: Plaground
 subTitle: Travaux pour le fun
 
-post: undefined
-timing: undefined
-
-jobType: undefined
-
 tasks: [UI/UXDesign, Branding, logotype]
+heroImage: playground/hero.png
+heroImage_alt: Plusieurs éléments de travaux fait pour le fun, affiche et logo
 ---

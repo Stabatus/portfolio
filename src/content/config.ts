@@ -17,10 +17,12 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     subTitle: z.string(),
-    post: z.string(),
-    timing: z.string(),
-    jobType: z.string(),
-    tasks: z.array(z.string())
+    post: z.string().optional(),
+    timing: z.string().optional(),
+    jobType: z.string().optional(),
+    tasks: z.array(z.string()),
+    heroImage: z.string(),
+    heroImage_alt: z.string().optional()
   })
 });
 

@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import CERTIFIED_DESIGNER_SVG from "#/home/certified-designer.svg";
+
+interface Props {
+  schools: CollectionEntry<"home">["data"]["schools"];
+}
+
+const { schools } = Astro.props;
+---
+
+<div class="container">
+  <Image
+    src={CERTIFIED_DESIGNER_SVG}
+    alt="Logo parodique de certified designer"
+  />
+  <div>
+    {
+      schools.map(([title, location]) => {
+        return (
+          <p>
+            {title}
+            <strong>{location}</strong>
+          </p>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  div.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    height: max-content;
+  }
+
+  div.container > img {
+    height: 8.5rem;
+  }
+
+  div.container > div {
+    height: 8.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.4rem;
+  }
+
+  strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+</style>

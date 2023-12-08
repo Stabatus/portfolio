@@ -1,0 +1,36 @@
+---
+import Testimonials from "./Testimonials.astro";
+
+interface Props {
+  randomNumberStack: [number, number, number];
+  testimonials: [string, string][];
+}
+
+const { randomNumberStack, testimonials } = Astro.props;
+---
+
+<div>
+  {
+    randomNumberStack.slice(0, 3).map((rndNumber) => {
+      const [Author, Quote] = testimonials[rndNumber];
+      return (
+        <Testimonials
+          author={Author}
+          quote={Quote}
+        />
+      );
+    })
+  }
+</div>
+
+<style>
+  div {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4.8rem;
+  }
+</style>

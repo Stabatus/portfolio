@@ -8,6 +8,27 @@ const { quote, author } = Astro.props;
 ---
 
 <blockquote>
-  {quote}
+  «{quote}»<br />
   <cite>{author}</cite>
 </blockquote>
+
+<style>
+  blockquote {
+    all: unset;
+    font-size: 1.6rem;
+    font-style: italic;
+    font-family: "Bely";
+    color: var(--grey-dark-color);
+    max-width: 27rem;
+    width: 33%;
+  }
+
+  cite {
+    color: var(--beige-color);
+    display: block;
+    font-size: 1.4rem;
+    font-style: normal;
+    margin-top: 1rem;
+    text-align: right;
+  }
+</style>
