@@ -145,12 +145,24 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
           const { title, date, location, timing, post, description } = data;
           return (
             <div>
+              <Image
+                class="expertise__background"
+                src="/backgroundPerlin-white.png"
+                alt="background expertise item"
+                width={1920}
+                height={1080}
+              />
               <div>
                 <h3>{title}</h3>
-                <p>
-                  {location} - {timing}
-                </p>
-                <p>{post}</p>
+                <div>
+                  <p>
+                    {location} - {timing}
+                  </p>
+                  <p>{post}</p>
+                  {description ? (
+                    <p class="expertise_desc">{description}</p>
+                  ) : null}
+                </div>
               </div>
               <span class="expertise_date">{date}</span>
             </div>
@@ -158,70 +170,94 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         })
       }
     </section>
-    <section>
+    <section class="infinite__loop">
+      <span>
+        {
+          [
+            ...tools,
+            ...skills,
+            ...skills_indevelopment,
+            ...tools,
+            ...skills,
+            ...skills_indevelopment,
+            ...tools,
+            ...skills,
+            ...skills_indevelopment,
+          ].map((tool) => {
+            return <span class="infinite__loop__content">{tool} </span>;
+          })
+        }
+      </span>
+    </section>
+    <section class="training">
       {
         trainingData.map(({ data }) => {
           const { title, date, location, option, result, projects } = data;
           return (
             <div>
-              <span>{date}</span>
-              <h3>
-                {title} - {location}
-              </h3>
-              <p>{option}</p>
-              <strong>{result}</strong>
-              <p>{description}</p>
-              {projects?.map(([title, description]) => {
-                return (
-                  <div>
-                    <h4>{title}</h4>
-                    <p>{description}</p>
-                  </div>
-                );
-              }) ?? ""}
+              <Image
+                class="expertise__background"
+                src="/backgroundPerlin-white.png"
+                alt="background expertise item"
+                width={1920}
+                height={1080}
+              />
+              <div>
+                <h3>
+                  {title} - {location}
+                </h3>
+                <div class="training_desc">
+                  <p>{option}</p>
+                  <strong>{result}</strong>
+                  {projects?.map(([title, description]) => {
+                    return (
+                      <div class="project">
+                        <h4>{title}</h4>
+                        <p>{description}</p>
+                      </div>
+                    );
+                  }) ?? ""}
+                </div>
+              </div>
+              <span class="expertise_date">{date}</span>
             </div>
           );
         })
       }
     </section>
-    <section>
-      {
-        tools.map((tool) => {
-          return <span>{tool} </span>;
-        })
-      }
-      {
-        skills.map((skill) => {
-          return <span>{skill} </span>;
-        })
-      }
-      {
-        skills_indevelopment.map((skill) => {
-          return <span>{skill} </span>;
-        })
-      }
-    </section>
+
     <section class="misc">
-      <div>
+      <div class="misc_photo">
         <h3>{photo_i_took_title}</h3>
-        {
-          photo_i_took.map((image) => {
-            return (
-              <Image
-                src={image}
-                alt={"Photo que j'ai pris lol"}
-                width={200}
-                height={Math.round(200 * 1.69)}
-              />
-            );
-          })
-        }
+        <div>
+          {
+            photo_i_took.map((image, index) => {
+              const IMAGE_WIDTH = 500;
+              return (
+                <Image
+                  src={image}
+                  alt={"Photo que j'ai pris lol"}
+                  width={IMAGE_WIDTH}
+                  height={Math.round(IMAGE_WIDTH * 1.69)}
+                />
+              );
+            })
+          }
+        </div>
       </div>
       <div>
-        <a href={lolRank[1]} target="_blank">{lolRank[0]}</a>
+        <a href={lolRank[1]} target="_blank">
+          <h3>
+            {lolRank[0]}
+          </h3>
+        </a>
       </div>
       <div>
-        <a href={playlist} target="_blank">{playlist_title}</a>
+        <a href={playlist} target="_blank">
+          <h3>
+            {playlist_title}
+          </h3>
+        </a>
       </div>
     </section>
   </main>
@@ -266,7 +302,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 
   @media screen and (min-width: 769px) {
     h1 {
-      font-size: 9.6rem;
+      font-size: 8.8rem;
     }
   }
 
@@ -351,57 +387,214 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     color: var(--grey-color);
   }
 
+  section.training,
   section.expertise {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     justify-content: center;
-    gap: 9.6rem;
-    margin-bottom: 4.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-right: auto;
+    margin-bottom: 2.4rem;
+    margin-left: auto;
 
     & > div {
       --padding-x: 3.2rem;
       --padding-y: 2.4rem;
+
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      gap: 0.8rem;
+
+      position: relative;
+      z-index: -1;
       border-radius: 0.8rem;
+      overflow: hidden;
       padding-top: var(--padding-y);
       padding-right: var(--padding-x);
       padding-bottom: var(--padding-y);
       padding-left: var(--padding-x);
+      flex: 1;
+      background-color: rgb(244, 244, 244);
+
+      & .expertise_date {
+        font-size: 2rem;
+        color: var(--grey-color);
+      }
+
+      & > img.expertise__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        opacity: 0.15;
+      }
+
       & > div {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-        h3 {
+        gap: 0.8rem;
+        & h3 {
           margin: 0;
-          font-family: "Bely Display";
-          font-size: 1.6rem;
+          padding: 0;
+          font-size: 2rem;
           font-weight: 600;
+          color: var(--black-color);
         }
+        & > div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
 
-        p {
-          margin: 0;
-          font-size: 1.2rem;
-          color: var(--grey-color);
+          & p {
+            margin: 0;
+            font-size: 1.6rem;
+            color: var(--grey-color);
+          }
         }
       }
-      .expertise_date {
-        font-family: "Bely Display";
+      &:first-child {
+        flex-direction: row;
+        flex: 0 0 calc(100% - var(--padding-x) * 2);
+        & > div {
+          & > h3 {
+            font-size: 3.2rem;
+          }
+          & > div {
+            & > p {
+              font-size: 2rem;
+            }
+
+            & > p.expertise_desc {
+              padding-top: 0.8rem;
+              font-size: 1.6rem;
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  }
+  section.training {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 4.8rem;
+    & > div {
+      flex: 1;
+      & strong {
+        color: var(--beige-color);
+      }
+      & div.training_desc {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        & > div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          & h4 {
+            margin: 0;
+            padding: 0;
+          }
+          & p {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+
+  .infinite__loop {
+    width: 100%;
+    white-space: nowrap;
+    position: relative;
+    left: 0;
+    margin-bottom: 2.4rem;
+    overflow: hidden;
+
+    & > span {
+      display: inline-block;
+      animation: infiniteloop infinite 30s linear;
+      & > .infinite__loop__content {
         font-size: 2.1rem;
+        color: var(--grey-color);
+        margin-right: 1.2rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .infinite__loop {
+      width: calc(100vw - 21px);
+    }
+  }
+
+  @keyframes infiniteloop {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  section.misc {
+    display: flex;
+    gap: 2.4rem;
+    margin-bottom: 4.8rem;
+
+    & > div {
+      position: relative;
+      width: 48rem;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      border-radius: 2.4rem;
+      background-color: var(--grey-color);
+
+      & a {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 100%;
       }
 
-      &:first-child > div {
-        padding-left: 1.6rem;
-        & > h3 {
-          color: var(--beige-color);
-          font-size: 2.4rem;
-        }
+      & h3 {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 1.6rem;
+        right: 1.6rem;
+        color: var(--white-color);
+      }
+    }
 
-        & > p {
-          font-size: 1.6rem;
+    & > div.misc_photo {
+      z-index: -1;
+      & > div {
+        position: absolute;
+        top: -50%;
+        left: 0;
+        z-index: -1;
+
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > img {
+          flex: 1;
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+          object-position: center;
+          scroll-snap-align: start;
         }
       }
     }
