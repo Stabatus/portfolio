@@ -7,6 +7,7 @@ import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
 import Work from "@/comp/Work/Work.astro";
 import TestimonialsContainer from "@/src/components/testionmials/TestimonialsContainer.astro";
 import { Image } from "astro:assets";
+import PhotoITook from "../components/PhotoItook/PhotoITook.astro";
 
 const homeEntries = await getCollection("home");
 
@@ -30,7 +31,7 @@ const {
   playlist_title,
   skills,
   skills_indevelopment,
-  tools,
+  tools
 } = homeEntries[0].data;
 
 const credentials = (await getCollection("credentials"))[0].data;
@@ -43,7 +44,7 @@ const projectData = await getEntries(relatedProject);
 const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
   month: "long",
-  day: "numeric",
+  day: "numeric"
 }).format(lastUpdate);
 
 const randomNumbers: number[] = [];
@@ -68,8 +69,16 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       <strong>Ruben Letist</strong>
       <nav>
         <a href="#">Curriculum vitae</a>
-        <a href={credentials.instagram} target="_blank">Instagram</a>
-        <a href={credentials.linkedin} target="_blank">Linkedin</a>
+        <a
+          href={credentials.instagram}
+          target="_blank"
+          >Instagram</a
+        >
+        <a
+          href={credentials.linkedin}
+          target="_blank"
+          >Linkedin</a
+        >
       </nav>
     </section>
 
@@ -137,7 +146,10 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         <h3>{aboutMe_title}</h3>
         <p>{aboutMe_desc}</p>
       </div>
-      <Image src={aboutMe_pic[0]} alt={aboutMe_pic[1]} />
+      <Image
+        src={aboutMe_pic[0]}
+        alt={aboutMe_pic[1]}
+      />
     </section>
     <section class="expertise">
       {
@@ -182,7 +194,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
             ...skills_indevelopment,
             ...tools,
             ...skills,
-            ...skills_indevelopment,
+            ...skills_indevelopment
           ].map((tool) => {
             return <span class="infinite__loop__content">{tool} </span>;
           })
@@ -227,33 +239,25 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     </section>
 
     <section class="misc">
-      <div class="misc_photo">
-        <h3>{photo_i_took_title}</h3>
-        <div>
-          {
-            photo_i_took.map((image, index) => {
-              const IMAGE_WIDTH = 500;
-              return (
-                <Image
-                  src={image}
-                  alt={"Photo que j'ai pris lol"}
-                  width={IMAGE_WIDTH}
-                  height={Math.round(IMAGE_WIDTH * 1.69)}
-                />
-              );
-            })
-          }
-        </div>
-      </div>
+      <PhotoITook
+        photo_i_took_title={photo_i_took_title}
+        photo_i_took={photo_i_took}
+      />
       <div>
-        <a href={lolRank[1]} target="_blank">
+        <a
+          href={lolRank[1]}
+          target="_blank"
+        >
           <h3>
             {lolRank[0]}
           </h3>
         </a>
       </div>
       <div>
-        <a href={playlist} target="_blank">
+        <a
+          href={playlist}
+          target="_blank"
+        >
           <h3>
             {playlist_title}
           </h3>
@@ -552,7 +556,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 
     & > div {
       position: relative;
-      width: 48rem;
+      flex: 1;
       aspect-ratio: 1/1;
       overflow: hidden;
       border-radius: 2.4rem;
@@ -570,32 +574,8 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         padding: 0;
         position: absolute;
         bottom: 1.6rem;
-        right: 1.6rem;
+        right: 2.4rem;
         color: var(--white-color);
-      }
-    }
-
-    & > div.misc_photo {
-      z-index: -1;
-      & > div {
-        position: absolute;
-        top: -50%;
-        left: 0;
-        z-index: -1;
-
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        & > img {
-          flex: 1;
-          width: 100%;
-          height: auto;
-          object-fit: cover;
-          object-position: center;
-          scroll-snap-align: start;
-        }
       }
     }
   }

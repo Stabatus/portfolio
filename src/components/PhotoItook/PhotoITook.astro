@@ -11,6 +11,218 @@ interface Props
 const { photo_i_took, photo_i_took_title } = Astro.props;
 ---
 
-<div></div>
+<div class="misc_photo">
+  <div class="misc_photo_galerie">
+    {
+      photo_i_took.map((image, index) => {
+        const IMAGE_WIDTH = 500;
+        return (
+          <Image
+            src={image}
+            alt={"Photo que j'ai pris lol"}
+            width={IMAGE_WIDTH}
+            height={Math.round(IMAGE_WIDTH * 1.69)}
+          />
+        );
+      })
+    }
+  </div>
+  <div class="misc_interaction">
+    <div class="bg_gradient"></div>
+    <h3>{photo_i_took_title}</h3>
+    <ul class="misc_photo_nav">
+      <li>
+        <label>
+          <input
+            type="checkbox"
+            name="photo_fullscreen"
+            value="0"
+          />
+        </label>
+      </li>
+      {
+        Array(photo_i_took.length)
+          .fill(null)
+          .map((_, index) => (
+            <li>
+              <label>
+                <input
+                  type="radio"
+                  name="photo_i_took"
+                  checked={index === 0}
+                  value={index}
+                />
+              </label>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+</div>
 
-<script></script>
+<script>
+  const selectAll = <T extends Element>(selector: string) =>
+    document.querySelectorAll<T>(selector);
+  const selectOne = <T extends Element>(selector: string) =>
+    document.querySelector<T>(selector);
+  const INTERVAL = 5000;
+  const photo_i_took = selectAll("input[name=photo_i_took]");
+  const photo_i_took_galerie = selectOne<HTMLDivElement>(
+    ".misc_photo_galerie"
+  )!;
+
+  function triggerAutomaticChange(input: HTMLInputElement) {
+    input.checked = true;
+    const changeEvent = new Event("change");
+    input.dispatchEvent(changeEvent);
+  }
+
+  function changeTopValue(photoGalerie: HTMLDivElement, index: number) {
+    photoGalerie.style.top = `-${index * 175 + 50}%`;
+  }
+
+  photo_i_took.forEach((i) =>
+    i.addEventListener("change", (event) => {
+      const index = parseInt((event.target as HTMLInputElement).value);
+      changeTopValue(photo_i_took_galerie, index);
+      resetInterval();
+    })
+  );
+
+  //fonction change les inputs checked dans un intervall de 5 secondes
+  let interval: number;
+  function startInterval() {
+    interval = setInterval(() => {
+      const checkedInput = selectOne<HTMLInputElement>(
+        "input[name=photo_i_took]:checked"
+      )!;
+      const nextInput = (Number(checkedInput.value) + 1) % photo_i_took.length;
+      triggerAutomaticChange(photo_i_took[nextInput] as HTMLInputElement);
+    }, INTERVAL);
+  }
+
+  function resetInterval() {
+    clearInterval(interval);
+    startInterval();
+  }
+
+  startInterval();
+
+  const photoFullscreen = selectOne<HTMLInputElement>(
+    "input['name=photo_fullscreen']"
+  )!;
+</script>
+
+<style>
+  div.misc_photo {
+    flex: 1;
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 2.4rem;
+    background-color: var(--grey-color);
+    z-index: 0;
+    & > * {
+      color: var(--white-color);
+    }
+    & > div.misc_photo_galerie {
+      position: absolute;
+      top: -50%;
+      left: 0;
+      z-index: -1;
+
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      transition: top 0.3s ease-in-out;
+
+      & > img {
+        flex: 1;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        scroll-snap-align: start;
+      }
+    }
+
+    & > div.misc_interaction {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+
+      padding-top: 7.6rem;
+      padding-right: 2.4rem;
+      padding-bottom: 1.6rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.8rem;
+
+      & > .bg_gradient {
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-image: linear-gradient(
+          to top,
+          var(--black-color) 0,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: all 300ms ease-out;
+      }
+
+      & > h3 {
+        font-size: 1.6rem;
+        margin: 0;
+        padding: 0;
+        z-index: 3;
+      }
+
+      & > ul.misc_photo_nav {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.8rem;
+        margin: 0;
+        padding: 0;
+        z-index: 3;
+
+        & label:has(input[type="radio"]) {
+          display: inline-block;
+          cursor: pointer;
+          height: 1.2rem;
+          aspect-ratio: 1/1;
+          border-radius: 100vw;
+          border: var(--white-color) 0.2rem solid;
+          opacity: 0.6;
+          transition: all 300ms ease-out;
+        }
+
+        & label:has(input:checked) {
+          background-color: var(--white-color);
+          border: var(--white-color) 0.2rem solid;
+          opacity: 1;
+        }
+
+        & input {
+          display: none;
+        }
+      }
+    }
+
+    &:hover {
+      & > div.misc_interaction .bg_gradient {
+        bottom: 0;
+        opacity: 1;
+      }
+    }
+  }
+</style>
