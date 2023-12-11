@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props
+  extends Pick<
+    CollectionEntry<"home">["data"],
+    "photo_i_took" | "photo_i_took_title"
+  > {}
+
+const { photo_i_took, photo_i_took_title } = Astro.props;
+---
+
+<div></div>
+
+<script></script>
