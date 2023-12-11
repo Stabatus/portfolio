@@ -6,25 +6,44 @@ import ParodyCertified from "@/comp/ParodyCertified/ParodyCertified.astro";
 import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
 import Work from "@/comp/Work/Work.astro";
 import TestimonialsContainer from "@/src/components/testionmials/TestimonialsContainer.astro";
+import { Image } from "astro:assets";
 
 const homeEntries = await getCollection("home");
 
 const {
   title,
+  subtitle,
   description,
   lastUpdate,
   schools,
   testimonials,
   relatedProject,
-  cta
+  aboutMe_desc,
+  aboutMe_title,
+  aboutMe_pic,
+  expertise,
+  training,
+  lolRank,
+  photo_i_took_title,
+  photo_i_took,
+  playlist,
+  playlist_title,
+  skills,
+  skills_indevelopment,
+  tools,
 } = homeEntries[0].data;
+
+const credentials = (await getCollection("credentials"))[0].data;
+
+const expertiseData = await getEntries(expertise);
+const trainingData = await getEntries(training);
 
 const projectData = await getEntries(relatedProject);
 
 const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
   month: "long",
-  day: "numeric"
+  day: "numeric",
 }).format(lastUpdate);
 
 const randomNumbers: number[] = [];
@@ -40,14 +59,17 @@ const firstStack = randomNumbers.slice(0, 3) as [number, number, number];
 const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 ---
 
-<Layout title="Ruben Letist - Digital Creative">
+<Layout
+  title="Ruben Letist - Digital Creative"
+  description="Portfolio de Ruben Letist, Designer d'interface UX et UI et Développeur créatif"
+>
   <header>
     <section class="nav_container">
       <strong>Ruben Letist</strong>
       <nav>
         <a href="#">Curriculum vitae</a>
-        <a href="#">Instagram</a>
-        <a href="#">Linkedin</a>
+        <a href={credentials.instagram} target="_blank">Instagram</a>
+        <a href={credentials.linkedin} target="_blank">Linkedin</a>
       </nav>
     </section>
 
@@ -58,7 +80,10 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
           Dernière mise à jour : {lastDayPublish}
         </p>
       </div>
-      <h1>Digital Designer <br />and Creative Developper</h1>
+      <div class="hero__title">
+        <h1>{title}</h1>
+        <h2>{subtitle}</h2>
+      </div>
     </section>
     <hr />
     <footer>
@@ -73,41 +98,131 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="project_highlight">
       {
         projectData.slice(0, 2).map(({ data }) => {
-          const { title, subTitle, heroImage, timing } = data;
+          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
           return (
             <WorkHighlight
               title={title}
               subTitle={subTitle}
               heroImage={heroImage}
+              heroImage_alt={heroImage_alt}
               timing={timing}
             />
           );
         })
       }
     </nav>
-    <div>
-      <TestimonialsContainer
-        testimonials={testimonials}
-        randomNumberStack={secondStack}
-      />
-    </div>
+    <TestimonialsContainer
+      testimonials={testimonials}
+      randomNumberStack={secondStack}
+    />
     <nav class="projects">
       {
         projectData.slice(2, 5).map(({ data }) => {
-          const { title, subTitle, heroImage, timing } = data;
+          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
           return (
             <Work
               title={title}
               subTitle={subTitle}
               heroImage={heroImage}
               timing={timing}
+              heroImage_alt={heroImage_alt}
             />
           );
         })
       }
     </nav>
+    <hr />
     <section class="aboutme">
-      
+      <div>
+        <h3>{aboutMe_title}</h3>
+        <p>{aboutMe_desc}</p>
+      </div>
+      <Image src={aboutMe_pic[0]} alt={aboutMe_pic[1]} />
+    </section>
+    <section class="expertise">
+      {
+        expertiseData.map(({ data }) => {
+          const { title, date, location, timing, post, description } = data;
+          return (
+            <div>
+              <div>
+                <h3>{title}</h3>
+                <p>
+                  {location} - {timing}
+                </p>
+                <p>{post}</p>
+              </div>
+              <span class="expertise_date">{date}</span>
+            </div>
+          );
+        })
+      }
+    </section>
+    <section>
+      {
+        trainingData.map(({ data }) => {
+          const { title, date, location, option, result, projects } = data;
+          return (
+            <div>
+              <span>{date}</span>
+              <h3>
+                {title} - {location}
+              </h3>
+              <p>{option}</p>
+              <strong>{result}</strong>
+              <p>{description}</p>
+              {projects?.map(([title, description]) => {
+                return (
+                  <div>
+                    <h4>{title}</h4>
+                    <p>{description}</p>
+                  </div>
+                );
+              }) ?? ""}
+            </div>
+          );
+        })
+      }
+    </section>
+    <section>
+      {
+        tools.map((tool) => {
+          return <span>{tool} </span>;
+        })
+      }
+      {
+        skills.map((skill) => {
+          return <span>{skill} </span>;
+        })
+      }
+      {
+        skills_indevelopment.map((skill) => {
+          return <span>{skill} </span>;
+        })
+      }
+    </section>
+    <section class="misc">
+      <div>
+        <h3>{photo_i_took_title}</h3>
+        {
+          photo_i_took.map((image) => {
+            return (
+              <Image
+                src={image}
+                alt={"Photo que j'ai pris lol"}
+                width={200}
+                height={Math.round(200 * 1.69)}
+              />
+            );
+          })
+        }
+      </div>
+      <div>
+        <a href={lolRank[1]} target="_blank">{lolRank[0]}</a>
+      </div>
+      <div>
+        <a href={playlist} target="_blank">{playlist_title}</a>
+      </div>
     </section>
   </main>
 </Layout>
@@ -121,6 +236,12 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     padding: 1.6rem 0;
   }
 
+  section.nav_container strong {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
   section.nav_container nav {
     display: flex;
     flex-direction: row;
@@ -128,10 +249,18 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     gap: 1.6rem;
   }
 
+  div.hero__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    width: 70%;
+  }
+
   h1 {
     font-size: 6.4rem;
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1;
     margin: 0;
   }
 
@@ -139,6 +268,12 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     h1 {
       font-size: 9.6rem;
     }
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    color: var(--grey-color);
+    font-weight: 400;
   }
   header {
     margin-bottom: 2.4rem;
@@ -172,7 +307,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 
   section.hero p {
     max-width: 35ch;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.4;
     color: var(--grey-color);
   }
@@ -193,7 +328,82 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
   section.aboutme {
     margin-bottom: 4.8rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 2.4rem;
   }
 
+  section.aboutme div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 50ch;
+  }
+
+  section.aboutme div p {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.4;
+  }
+
+  section.aboutme div h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--grey-color);
+  }
+
+  section.expertise {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 9.6rem;
+    margin-bottom: 4.8rem;
+
+    & > div {
+      --padding-x: 3.2rem;
+      --padding-y: 2.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 0.8rem;
+      padding-top: var(--padding-y);
+      padding-right: var(--padding-x);
+      padding-bottom: var(--padding-y);
+      padding-left: var(--padding-x);
+      & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        h3 {
+          margin: 0;
+          font-family: "Bely Display";
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          font-size: 1.2rem;
+          color: var(--grey-color);
+        }
+      }
+      .expertise_date {
+        font-family: "Bely Display";
+        font-size: 2.1rem;
+      }
+
+      &:first-child > div {
+        padding-left: 1.6rem;
+        & > h3 {
+          color: var(--beige-color);
+          font-size: 2.4rem;
+        }
+
+        & > p {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
 </style>

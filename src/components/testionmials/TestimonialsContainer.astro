@@ -1,5 +1,5 @@
 ---
-import Testimonials from "./Testimonials.astro";
+import Testimonials from "./testimonials.astro";
 
 interface Props {
   randomNumberStack: [number, number, number];
@@ -13,12 +13,7 @@ const { randomNumberStack, testimonials } = Astro.props;
   {
     randomNumberStack.slice(0, 3).map((rndNumber) => {
       const [Author, Quote] = testimonials[rndNumber];
-      return (
-        <Testimonials
-          author={Author}
-          quote={Quote}
-        />
-      );
+      return <Testimonials author={Author} quote={Quote} />;
     })
   }
 </div>

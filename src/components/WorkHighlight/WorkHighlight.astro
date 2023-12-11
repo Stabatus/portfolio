@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
 interface Props
   extends Pick<
     CollectionEntry<"projects">["data"],
@@ -14,21 +16,19 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
 <a href="#">
   <section>
     <div class="section_gradientBackground"></div>
-    <img
+    <Image
       class="background"
       src="/backgroundPerlin-white.png"
       alt="Background Perlin Noise"
+      width={1920}
+      height={1080}
     />
     <div>
       <h3>{title}</h3>
       <p>{subTitle}</p>
       {timing ? <p>{timing}</p> : null}
     </div>
-    <img
-      class="hero-image"
-      src={heroImage}
-      alt={heroImage_alt}
-    />
+    <Image class="hero-image" src={heroImage} alt={heroImage_alt} />
   </section>
 </a>
 
@@ -138,6 +138,7 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
     right: 0;
     transition: var(--hero-transition);
     width: 95%;
+    height: auto;
   }
 
   section:hover .hero-image {

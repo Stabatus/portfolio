@@ -8,6 +8,6 @@ timing: "2018"
 jobType: Master - Jury de fin d'étude
 
 tasks: [UI/UXDesign, Branding Design]
-heroImage: owltrip/hero.png
+heroImage: /public/owltrip/hero.png
 heroImage_alt: Élément 3D representant un diorama d'une ville et un smartphone qui photographie
 ---

@@ -17,9 +17,7 @@ body {
   padding: 0;
   margin: 0;
 }
-@font-face {
-  font-family: "azo-sans-web", sans-serif;
-}
+
 html * {
   font-size: 1.6rem;
 }

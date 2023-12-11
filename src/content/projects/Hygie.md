@@ -13,6 +13,6 @@ tasks:
     design d’interface et expérience utilisateur,
     développement frontend
   ]
-heroImage: hygie/hero.png
+heroImage: /public/hygie/hero.png
 heroImage_alt: Screenshot du site web Hygie, société de facturation et développement de logiciel infirmier
 ---
