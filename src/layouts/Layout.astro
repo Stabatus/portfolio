@@ -1,6 +1,7 @@
 ---
 import "./layout.css";
 import { Image } from "astro:assets";
+import Navigation from "@/comp/Navigation/Navigation.astro";
 import Footer from "@/comp/Footer/Footer.astro";
 interface Props {
   title: string;
@@ -14,11 +15,27 @@ const { title, description } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="https://use.typekit.net/bru3olk.css" />
+    <meta
+      name="description"
+      content={description}
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.typekit.net/bru3olk.css"
+    />
     <title>{title}</title>
   </head>
   <body>
@@ -29,6 +46,7 @@ const { title, description } = Astro.props;
       width={1920}
       height={1080}
     />
+    <Navigation />
     <slot />
     <Footer />
   </body>

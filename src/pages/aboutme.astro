@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { getEntries } from "astro:content";
+import { Image } from "astro:assets";
+import ExperienceSection from "../components/ExperienceSection/ExperienceSection.astro";
+import InfiniteLoop from "../components/InfiniteLoop/InfiniteLoop.astro";
+import TrainingSection from "../components/TrainingSection/TrainingSection.astro";
+import Work from "../components/Work/Work.astro";
+
+const homeEntries = await getCollection("home");
+
+const {
+  aboutMe_desc,
+  aboutMe_title,
+  aboutMe_pic,
+  expertise,
+  skills,
+  training,
+  tools,
+  relatedProject
+} = homeEntries[0].data;
+
+const projectData = (await getEntries(relatedProject)).slice(0, 3);
+
+const words = [...skills, ...tools, ...skills, ...tools, ...skills, ...tools];
+---
+
+<Layout
+  title="About me - Ruben Letist - Digital Creative"
+  description="Portfolio de Ruben Letist, Designer d'interface UX et UI et Développeur créatif"
+>
+  <header>
+    <section class="aboutme">
+      <Image
+        src={aboutMe_pic[0]}
+        alt={aboutMe_pic[1]}
+      />
+      <div>
+        <h1>Ruben Letist</h1>
+        <h2>{aboutMe_title}</h2>
+        <p>{aboutMe_desc}</p>
+      </div>
+    </section>
+    <hr />
+  </header>
+
+  <main>
+    <ExperienceSection experience={expertise} />
+    <InfiniteLoop words={words} />
+    <TrainingSection training={training} />
+    <hr />
+    <nav class="projects">
+      {
+        projectData.map(({ data }) => {
+          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
+          return (
+            <Work
+              title={title}
+              subTitle={subTitle}
+              heroImage={heroImage}
+              timing={timing}
+              heroImage_alt={heroImage_alt}
+            />
+          );
+        })
+      }
+    </nav>
+  </main>
+</Layout>
+
+<style>
+  header {
+    padding-top: 15rem;
+  }
+
+  section.aboutme {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.4rem;
+    margin-bottom: 4.8rem;
+  }
+
+  h1 {
+    font-size: 6.8rem;
+    margin: 0;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--grey-color);
+  }
+
+  section.aboutme p {
+    font-size: 2.4rem;
+    width: 60ch;
+  }
+
+  nav.projects {
+    display: flex;
+    flex-direction: row;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
+    margin-bottom: 4.8rem;
+  }
+</style>

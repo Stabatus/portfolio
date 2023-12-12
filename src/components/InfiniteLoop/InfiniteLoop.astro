@@ -1,0 +1,54 @@
+---
+interface Props {
+  words: string[];
+}
+
+const { words } = Astro.props;
+---
+
+<section class="infinite__loop">
+  <span>
+    {
+      words.map((tool) => {
+        return <span class="infinite__loop__content">{tool} </span>;
+      })
+    }
+  </span>
+</section>
+
+<style>
+  .infinite__loop {
+    width: 100%;
+    white-space: nowrap;
+    position: relative;
+    left: 0;
+    margin-bottom: 2.4rem;
+    overflow: hidden;
+
+    & > span {
+      display: inline-block;
+      animation: infiniteloop infinite 30s linear;
+      & > .infinite__loop__content {
+        font-size: 2.1rem;
+        color: var(--grey-color);
+        margin-right: 1.2rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .infinite__loop {
+      width: calc(100vw - 21px);
+    }
+  }
+
+  @keyframes infiniteloop {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+const credentials = (await getCollection("credentials"))[0].data;
+---
+
+<section class="nav_container">
+  <a href="/">
+    <strong>Ruben Letist</strong>
+  </a>
+  <nav>
+    <a href="#">Curriculum vitae</a>
+    <a
+      href={credentials.instagram}
+      target="_blank"
+      >Instagram</a
+    >
+    <a
+      href={credentials.linkedin}
+      target="_blank"
+      >Linkedin</a
+    >
+  </nav>
+</section>
+
+<style>
+  section.nav_container {
+    position:fixed;
+    top: 1.6rem;
+    left: 50%;
+    translate: -50% 0;
+    padding-right: var(--paddingYLayout);
+    padding-left: var(--paddingYLayout);
+    width: calc(100% - var(--paddingYLayout) * 2);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 0;
+
+    & a:has(strong) {
+      color: var(--colorText);
+      text-decoration: none;
+    }
+
+    & strong {
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    & nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.6rem;
+    }
+  }
+</style>

@@ -6,11 +6,8 @@ import ParodyCertified from "@/comp/ParodyCertified/ParodyCertified.astro";
 import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
 import Work from "@/comp/Work/Work.astro";
 import TestimonialsContainer from "@/comp/testionmials/TestimonialsContainer.astro";
-import TrainingSection from "@/comp/TrainingSection/TrainingSection.astro";
-import LolRank from "@/comp/LolRank/LolRank.astro";
-import SpotifyPlaylist from "@/comp/SpotifyPlaylist/SpotifyPlaylist.astro";
+import InfiniteLoop from "@/comp/InfiniteLoop/InfiniteLoop.astro";
 import { Image } from "astro:assets";
-import PhotoITook from "../components/PhotoItook/PhotoITook.astro";
 import ExperienceSection from "../components/ExperienceSection/ExperienceSection.astro";
 
 const homeEntries = await getCollection("home");
@@ -27,18 +24,10 @@ const {
   aboutMe_title,
   aboutMe_pic,
   expertise,
-  training,
-  lolRank,
-  photo_i_took_title,
-  photo_i_took,
   skills,
   skills_indevelopment,
   tools
 } = homeEntries[0].data;
-
-const credentials = (await getCollection("credentials"))[0].data;
-
-const expertiseData = await getEntries(expertise);
 
 const projectData = await getEntries(relatedProject);
 
@@ -57,6 +46,18 @@ while (randomNumbers.length < 7) {
   }
 }
 
+const words = [
+  ...tools,
+  ...skills,
+  ...skills_indevelopment,
+  ...tools,
+  ...skills,
+  ...skills_indevelopment,
+  ...tools,
+  ...skills,
+  ...skills_indevelopment
+];
+
 const firstStack = randomNumbers.slice(0, 3) as [number, number, number];
 const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 ---
@@ -66,23 +67,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
   description="Portfolio de Ruben Letist, Designer d'interface UX et UI et Développeur créatif"
 >
   <header>
-    <section class="nav_container">
-      <strong>Ruben Letist</strong>
-      <nav>
-        <a href="#">Curriculum vitae</a>
-        <a
-          href={credentials.instagram}
-          target="_blank"
-          >Instagram</a
-        >
-        <a
-          href={credentials.linkedin}
-          target="_blank"
-          >Linkedin</a
-        >
-      </nav>
-    </section>
-
     <section class="hero">
       <div>
         <p>{description}</p>
@@ -131,7 +115,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       <div>
         <h3>{aboutMe_title}</h3>
         <p>{aboutMe_desc}</p>
-        <a href="#">A propos de moi</a>
+        <a href="/aboutme">A propos de moi</a>
       </div>
       <Image
         src={aboutMe_pic[0]}
@@ -139,25 +123,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       />
     </section>
 
-    <section class="infinite__loop">
-      <span>
-        {
-          [
-            ...tools,
-            ...skills,
-            ...skills_indevelopment,
-            ...tools,
-            ...skills,
-            ...skills_indevelopment,
-            ...tools,
-            ...skills,
-            ...skills_indevelopment
-          ].map((tool) => {
-            return <span class="infinite__loop__content">{tool} </span>;
-          })
-        }
-      </span>
-    </section>
+    <InfiniteLoop words={words} />
 
     <ExperienceSection experience={expertise} />
 
@@ -182,27 +148,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
 </Layout>
 
 <style>
-  section.nav_container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.6rem 0;
-  }
-
-  section.nav_container strong {
-    font-size: 1.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  section.nav_container nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.6rem;
-  }
-
   div.hero__title {
     display: flex;
     flex-direction: column;
@@ -238,11 +183,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  }
-
-  hr {
-    margin-top: 2.4rem;
-    margin-bottom: 2.4rem;
   }
 
   section.hero {
@@ -284,8 +224,8 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     display: flex;
     justify-content: flex-end;
     gap: 2.4rem;
-  
-    &  div {
+
+    & div {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
@@ -303,40 +243,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       font-weight: 400;
       font-size: 1.6rem;
       color: var(--grey-color);
-    }
-}
-  .infinite__loop {
-    width: 100%;
-    white-space: nowrap;
-    position: relative;
-    left: 0;
-    margin-bottom: 2.4rem;
-    overflow: hidden;
-
-    & > span {
-      display: inline-block;
-      animation: infiniteloop infinite 30s linear;
-      & > .infinite__loop__content {
-        font-size: 2.1rem;
-        color: var(--grey-color);
-        margin-right: 1.2rem;
-      }
-    }
-  }
-
-  @media screen and (max-width: 769px) {
-    .infinite__loop {
-      width: calc(100vw - 21px);
-    }
-  }
-
-  @keyframes infiniteloop {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-50%);
     }
   }
 

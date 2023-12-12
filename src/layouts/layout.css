@@ -10,6 +10,7 @@
   font-size: 62.5%;
   line-height: 1.3;
   color: var(--black-color);
+  --paddingYLayout: 7.4rem;
 }
 
 html,
@@ -48,6 +49,12 @@ html {
 header,
 main {
   margin: 0 auto;
-  padding-right: 7.4rem;
-  padding-left: 7.4rem;
+  padding-right: var(--paddingYLayout);
+  padding-left: var(--paddingYLayout);
+}
+
+hr {
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+  width: 100%;
 }
