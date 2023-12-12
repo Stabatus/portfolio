@@ -28,7 +28,11 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
       <p>{subTitle}</p>
       {timing ? <p>{timing}</p> : null}
     </div>
-    <Image class="hero-image" src={heroImage} alt={heroImage_alt} />
+    <Image
+      class="hero-image"
+      src={heroImage}
+      alt={heroImage_alt}
+    />
   </section>
 </a>
 
@@ -59,7 +63,6 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
 
   a:hover {
     border: var(--white-color) 0.2rem solid;
-    translate: 0 -0.4rem;
   }
 
   section {

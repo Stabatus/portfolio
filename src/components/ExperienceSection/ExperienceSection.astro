@@ -1,0 +1,137 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props {
+  experience: CollectionEntry<"home">["data"]["expertise"];
+}
+
+const { experience } = Astro.props;
+const experienceData = await getEntries(experience);
+---
+
+<section class="expertise">
+  {
+    experienceData.map(({ data }) => {
+      const { title, date, location, timing, post, description } = data;
+      return (
+        <div>
+          <Image
+            class="expertise__background"
+            src="/backgroundPerlin-white.png"
+            alt="background expertise item"
+            width={1920}
+            height={1080}
+          />
+          <div>
+            <h3>{title}</h3>
+            <div>
+              <p>
+                {location} - {timing}
+              </p>
+              <p>{post}</p>
+              {description ? <p class="expertise_desc">{description}</p> : null}
+            </div>
+          </div>
+          <span class="expertise_date">{date}</span>
+        </div>
+      );
+    })
+  }
+</section>
+
+<style>
+  section.expertise {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-right: auto;
+    margin-left: auto;
+
+    & > div {
+      --padding-x: 3.2rem;
+      --padding-y: 2.4rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+
+      position: relative;
+      z-index: -1;
+      border-radius: 0.8rem;
+      overflow: hidden;
+      padding-top: var(--padding-y);
+      padding-right: var(--padding-x);
+      padding-bottom: var(--padding-y);
+      padding-left: var(--padding-x);
+      flex: 1;
+      background-color: rgb(244, 244, 244);
+
+      & .expertise_date {
+        font-size: 2rem;
+        color: var(--grey-color);
+      }
+
+      & > img.expertise__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        z-index: 0;
+        opacity: 0.15;
+      }
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        & h3 {
+          margin: 0;
+          padding: 0;
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--black-color);
+        }
+        & > div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+
+          & p {
+            margin: 0;
+            font-size: 1.6rem;
+            color: var(--grey-color);
+          }
+        }
+      }
+      &:first-child {
+        flex-direction: row;
+        flex: 0 0 calc(100% - var(--padding-x) * 2);
+        & > div {
+          & > h3 {
+            font-size: 3.2rem;
+          }
+          & > div {
+            & > p {
+              font-size: 2rem;
+            }
+
+            & > p.expertise_desc {
+              padding-top: 0.8rem;
+              font-size: 1.6rem;
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

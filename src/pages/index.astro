@@ -5,9 +5,13 @@ import { getEntries } from "astro:content";
 import ParodyCertified from "@/comp/ParodyCertified/ParodyCertified.astro";
 import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
 import Work from "@/comp/Work/Work.astro";
-import TestimonialsContainer from "@/src/components/testionmials/TestimonialsContainer.astro";
+import TestimonialsContainer from "@/comp/testionmials/TestimonialsContainer.astro";
+import TrainingSection from "@/comp/TrainingSection/TrainingSection.astro";
+import LolRank from "@/comp/LolRank/LolRank.astro";
+import SpotifyPlaylist from "@/comp/SpotifyPlaylist/SpotifyPlaylist.astro";
 import { Image } from "astro:assets";
 import PhotoITook from "../components/PhotoItook/PhotoITook.astro";
+import ExperienceSection from "../components/ExperienceSection/ExperienceSection.astro";
 
 const homeEntries = await getCollection("home");
 
@@ -27,24 +31,21 @@ const {
   lolRank,
   photo_i_took_title,
   photo_i_took,
-  playlist,
-  playlist_title,
   skills,
   skills_indevelopment,
-  tools,
+  tools
 } = homeEntries[0].data;
 
 const credentials = (await getCollection("credentials"))[0].data;
 
 const expertiseData = await getEntries(expertise);
-const trainingData = await getEntries(training);
 
 const projectData = await getEntries(relatedProject);
 
 const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
   month: "long",
-  day: "numeric",
+  day: "numeric"
 }).format(lastUpdate);
 
 const randomNumbers: number[] = [];
@@ -69,8 +70,16 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       <strong>Ruben Letist</strong>
       <nav>
         <a href="#">Curriculum vitae</a>
-        <a href={credentials.instagram} target="_blank">Instagram</a>
-        <a href={credentials.linkedin} target="_blank">Linkedin</a>
+        <a
+          href={credentials.instagram}
+          target="_blank"
+          >Instagram</a
+        >
+        <a
+          href={credentials.linkedin}
+          target="_blank"
+          >Linkedin</a
+        >
       </nav>
     </section>
 
@@ -116,6 +125,43 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       testimonials={testimonials}
       randomNumberStack={secondStack}
     />
+
+    <hr />
+    <section class="aboutme">
+      <div>
+        <h3>{aboutMe_title}</h3>
+        <p>{aboutMe_desc}</p>
+        <a href="#">A propos de moi</a>
+      </div>
+      <Image
+        src={aboutMe_pic[0]}
+        alt={aboutMe_pic[1]}
+      />
+    </section>
+
+    <section class="infinite__loop">
+      <span>
+        {
+          [
+            ...tools,
+            ...skills,
+            ...skills_indevelopment,
+            ...tools,
+            ...skills,
+            ...skills_indevelopment,
+            ...tools,
+            ...skills,
+            ...skills_indevelopment
+          ].map((tool) => {
+            return <span class="infinite__loop__content">{tool} </span>;
+          })
+        }
+      </span>
+    </section>
+
+    <ExperienceSection experience={expertise} />
+
+    <hr />
     <nav class="projects">
       {
         projectData.slice(2, 5).map(({ data }) => {
@@ -132,139 +178,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         })
       }
     </nav>
-    <hr />
-    <section class="aboutme">
-      <div>
-        <h3>{aboutMe_title}</h3>
-        <p>{aboutMe_desc}</p>
-      </div>
-      <Image src={aboutMe_pic[0]} alt={aboutMe_pic[1]} />
-    </section>
-    <section class="expertise">
-      {
-        expertiseData.map(({ data }) => {
-          const { title, date, location, timing, post, description } = data;
-          return (
-            <div>
-              <Image
-                class="expertise__background"
-                src="/backgroundPerlin-white.png"
-                alt="background expertise item"
-                width={1920}
-                height={1080}
-              />
-              <div>
-                <h3>{title}</h3>
-                <div>
-                  <p>
-                    {location} - {timing}
-                  </p>
-                  <p>{post}</p>
-                  {description ? (
-                    <p class="expertise_desc">{description}</p>
-                  ) : null}
-                </div>
-              </div>
-              <span class="expertise_date">{date}</span>
-            </div>
-          );
-        })
-      }
-    </section>
-    <section class="infinite__loop">
-      <span>
-        {
-          [
-            ...tools,
-            ...skills,
-            ...skills_indevelopment,
-            ...tools,
-            ...skills,
-            ...skills_indevelopment,
-            ...tools,
-            ...skills,
-            ...skills_indevelopment,
-          ].map((tool) => {
-            return <span class="infinite__loop__content">{tool} </span>;
-          })
-        }
-      </span>
-    </section>
-    <section class="training">
-      {
-        trainingData.map(({ data }) => {
-          const { title, date, location, option, result, projects } = data;
-          return (
-            <div>
-              <Image
-                class="expertise__background"
-                src="/backgroundPerlin-white.png"
-                alt="background expertise item"
-                width={1920}
-                height={1080}
-              />
-              <div>
-                <h3>
-                  {title} - {location}
-                </h3>
-                <div class="training_desc">
-                  <p>{option}</p>
-                  <strong>{result}</strong>
-                  {projects?.map(([title, description]) => {
-                    return (
-                      <div class="project">
-                        <h4>{title}</h4>
-                        <p>{description}</p>
-                      </div>
-                    );
-                  }) ?? ""}
-                </div>
-              </div>
-              <span class="expertise_date">{date}</span>
-            </div>
-          );
-        })
-      }
-    </section>
-
-    <section class="misc">
-      <PhotoITook
-        photo_i_took_title={photo_i_took_title}
-        photo_i_took={photo_i_took}
-      />
-      <div class="lolRank">
-        <a href={lolRank[1]} target="_blank">
-          <Image
-            class="expertise__background"
-            src="/backgroundPerlin-white.png"
-            alt="background expertise item"
-            width={1920}
-            height={1080}
-          />
-          <Image
-            src="/public/home/emblem-emerald.png"
-            alt="emblem emerald"
-            class="emblem-emerald"
-            width={256 * 5}
-            height={144 * 5}
-          />
-          <h3>
-            {lolRank[0]}
-          </h3>
-        </a>
-      </div>
-      <div>
-        <iframe
-          style="border-radius:12px"
-          src="https://open.spotify.com/embed/playlist/37i9dQZF1Fa1IIVtEpGUcU?utm_source=generator"
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          allowfullscreen=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"></iframe>
-      </div>
-    </section>
   </main>
 </Layout>
 
@@ -371,150 +284,27 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     display: flex;
     justify-content: flex-end;
     gap: 2.4rem;
-  }
-
-  section.aboutme div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    width: 50ch;
-  }
-
-  section.aboutme div p {
-    margin: 0;
-    font-size: 1.8rem;
-    line-height: 1.4;
-  }
-
-  section.aboutme div h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: var(--grey-color);
-  }
-
-  section.training,
-  section.expertise {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.6rem;
-    margin-right: auto;
-    margin-bottom: 2.4rem;
-    margin-left: auto;
-
-    & > div {
-      --padding-x: 3.2rem;
-      --padding-y: 2.4rem;
-
+  
+    &  div {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 0.8rem;
-
-      position: relative;
-      z-index: -1;
-      border-radius: 0.8rem;
-      overflow: hidden;
-      padding-top: var(--padding-y);
-      padding-right: var(--padding-x);
-      padding-bottom: var(--padding-y);
-      padding-left: var(--padding-x);
-      flex: 1;
-      background-color: rgb(244, 244, 244);
-
-      & .expertise_date {
-        font-size: 2rem;
-        color: var(--grey-color);
-      }
-
-      & > img.expertise__background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        object-position: center;
-        z-index: 0;
-        opacity: 0.15;
-      }
-
-      & > div {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        & h3 {
-          margin: 0;
-          padding: 0;
-          font-size: 2rem;
-          font-weight: 600;
-          color: var(--black-color);
-        }
-        & > div {
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-
-          & p {
-            margin: 0;
-            font-size: 1.6rem;
-            color: var(--grey-color);
-          }
-        }
-      }
-      &:first-child {
-        flex-direction: row;
-        flex: 0 0 calc(100% - var(--padding-x) * 2);
-        & > div {
-          & > h3 {
-            font-size: 3.2rem;
-          }
-          & > div {
-            & > p {
-              font-size: 2rem;
-            }
-
-            & > p.expertise_desc {
-              padding-top: 0.8rem;
-              font-size: 1.6rem;
-              opacity: 0.8;
-            }
-          }
-        }
-      }
+      width: 60ch;
     }
-  }
-  section.training {
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 4.8rem;
-    & > div {
-      flex: 1;
-      & strong {
-        color: var(--beige-color);
-      }
-      & div.training_desc {
-        display: flex;
-        flex-direction: column;
-        gap: 1.6rem;
-        & > div {
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-          & h4 {
-            margin: 0;
-            padding: 0;
-          }
-          & p {
-            opacity: 0.8;
-          }
-        }
-      }
-    }
-  }
 
+    & div p {
+      margin: 0;
+      font-size: 2.8rem;
+      line-height: 140%;
+    }
+
+    & div h3 {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--grey-color);
+    }
+}
   .infinite__loop {
     width: 100%;
     white-space: nowrap;
@@ -554,50 +344,5 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     display: flex;
     gap: 2.4rem;
     margin-bottom: 4.8rem;
-
-    & > div {
-      position: relative;
-      flex: 1;
-      aspect-ratio: 1/1;
-      overflow: hidden;
-      border-radius: 2.4rem;
-      background-color: var(--grey-color);
-
-      & a {
-        position: relative;
-        display: block;
-        height: 100%;
-        width: 100%;
-      }
-
-      & h3 {
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        bottom: 1.6rem;
-        right: 2.4rem;
-        color: var(--white-color);
-      }
-    }
-
-    & div.lolRank {
-      background-image: radial-gradient(
-        circle at center,
-        rgb(145, 237, 203) 0%,
-        rgb(32, 151, 107) 45%,
-        rgb(7, 77, 51) 90%
-      );
-
-      & .emblem-emerald {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      & .expertise__background {
-        opacity: 0.15;
-      }
-    }
   }
 </style>

@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+interface Props {
+  lolRank: CollectionEntry<"home">["data"]["lolRank"];
+}
+
+const { lolRank } = Astro.props;
+---
+
+<div class="lolRank">
+  <a
+    href={lolRank[1]}
+    target="_blank"
+  >
+    <Image
+      class="expertise__background"
+      src="/backgroundPerlin-white.png"
+      alt="background expertise item"
+      width={1920}
+      height={1080}
+    />
+    <Image
+      src="/home/emblem-emerald.png"
+      alt="emblem emerald"
+      class="emblem-emerald"
+      width={256 * 5}
+      height={144 * 5}
+    />
+    <h3>
+      {lolRank[0]}
+    </h3>
+  </a>
+</div>
+
+<style>
+  div.lolRank {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 2.4rem;
+
+    background-image: radial-gradient(
+      circle at center,
+      rgb(145, 237, 203) 0%,
+      rgb(32, 151, 107) 45%,
+      rgb(7, 77, 51) 90%
+    );
+    
+    & a {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+
+      & h3 {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 1.6rem;
+        right: 2.4rem;
+        color: var(--white-color);
+      }
+
+    & .emblem-emerald {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    & .expertise__background {
+      opacity: 0.15;
+    }
+  }
+</style>
