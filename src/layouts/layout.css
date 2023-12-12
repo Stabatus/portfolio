@@ -48,7 +48,6 @@ html {
 header,
 main {
   margin: 0 auto;
-  max-width: 164rem;
   padding-right: 7.4rem;
   padding-left: 7.4rem;
 }

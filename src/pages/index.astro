@@ -31,7 +31,7 @@ const {
   playlist_title,
   skills,
   skills_indevelopment,
-  tools
+  tools,
 } = homeEntries[0].data;
 
 const credentials = (await getCollection("credentials"))[0].data;
@@ -44,7 +44,7 @@ const projectData = await getEntries(relatedProject);
 const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
   month: "long",
-  day: "numeric"
+  day: "numeric",
 }).format(lastUpdate);
 
 const randomNumbers: number[] = [];
@@ -69,16 +69,8 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       <strong>Ruben Letist</strong>
       <nav>
         <a href="#">Curriculum vitae</a>
-        <a
-          href={credentials.instagram}
-          target="_blank"
-          >Instagram</a
-        >
-        <a
-          href={credentials.linkedin}
-          target="_blank"
-          >Linkedin</a
-        >
+        <a href={credentials.instagram} target="_blank">Instagram</a>
+        <a href={credentials.linkedin} target="_blank">Linkedin</a>
       </nav>
     </section>
 
@@ -146,10 +138,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         <h3>{aboutMe_title}</h3>
         <p>{aboutMe_desc}</p>
       </div>
-      <Image
-        src={aboutMe_pic[0]}
-        alt={aboutMe_pic[1]}
-      />
+      <Image src={aboutMe_pic[0]} alt={aboutMe_pic[1]} />
     </section>
     <section class="expertise">
       {
@@ -194,7 +183,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
             ...skills_indevelopment,
             ...tools,
             ...skills,
-            ...skills_indevelopment
+            ...skills_indevelopment,
           ].map((tool) => {
             return <span class="infinite__loop__content">{tool} </span>;
           })
@@ -243,25 +232,37 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         photo_i_took_title={photo_i_took_title}
         photo_i_took={photo_i_took}
       />
-      <div>
-        <a
-          href={lolRank[1]}
-          target="_blank"
-        >
+      <div class="lolRank">
+        <a href={lolRank[1]} target="_blank">
+          <Image
+            class="expertise__background"
+            src="/backgroundPerlin-white.png"
+            alt="background expertise item"
+            width={1920}
+            height={1080}
+          />
+          <Image
+            src="/public/home/emblem-emerald.png"
+            alt="emblem emerald"
+            class="emblem-emerald"
+            width={256 * 5}
+            height={144 * 5}
+          />
           <h3>
             {lolRank[0]}
           </h3>
         </a>
       </div>
       <div>
-        <a
-          href={playlist}
-          target="_blank"
-        >
-          <h3>
-            {playlist_title}
-          </h3>
-        </a>
+        <iframe
+          style="border-radius:12px"
+          src="https://open.spotify.com/embed/playlist/37i9dQZF1Fa1IIVtEpGUcU?utm_source=generator"
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"></iframe>
       </div>
     </section>
   </main>
@@ -336,7 +337,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
-    padding-top: 40dvh;
+    padding-top: 35dvh;
   }
 
   section.hero div {
@@ -576,6 +577,26 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
         bottom: 1.6rem;
         right: 2.4rem;
         color: var(--white-color);
+      }
+    }
+
+    & div.lolRank {
+      background-image: radial-gradient(
+        circle at center,
+        rgb(145, 237, 203) 0%,
+        rgb(32, 151, 107) 45%,
+        rgb(7, 77, 51) 90%
+      );
+
+      & .emblem-emerald {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      & .expertise__background {
+        opacity: 0.15;
       }
     }
   }
