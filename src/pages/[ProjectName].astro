@@ -1,5 +1,6 @@
 ---
 import { getEntry } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import HeaderProjectLayout from "../layouts/HeaderProjectLayout.astro";
 
@@ -21,35 +22,84 @@ if (!HEMData) {
   return Astro.redirect("/");
 }
 
-const {
-  title,
-  subTitle,
-  heroImage,
-  timing,
-  heroImage_alt,
-  tasks,
-  post,
-  jobType,
-} = HEMData["data"];
-
-const HeaderProjectLayoutProps = {
-  title,
-  subTitle,
-  heroImage,
-  heroImage_alt,
-  tasks,
-  post,
-  timing,
-  jobType,
-};
+const { title, logo, banner, description, doneIn, techno, description2 } =
+  HEMData["data"];
 ---
 
 <Layout
   title={`${title} - Ruben Letist - Digital Creative`}
   description="Cas d'étude de la création d'une application mobile pour Hygie, une société de développement de logiciel de facturation infirmier"
 >
-  <HeaderProjectLayout {...HeaderProjectLayoutProps} />
+  <HeaderProjectLayout transition:animate={"initial"} {...HEMData["data"]} />
   <main>
-    <p>{subTitle}</p>
+    {
+      ProjectName != "playground" ? (
+        <>
+          <div class="project_description">
+            <Image src={logo} alt={`Logo de ${title}`} />
+            <p>{description}</p>
+            <div>
+              {doneIn ? (
+                <p>
+                  <strong>Timing</strong>
+                  <br />
+                  <span>{doneIn}</span>
+                </p>
+              ) : null}
+              {techno && techno.length ? (
+                <p>
+                  <strong>Technologies</strong>
+                  <br />
+                  <span>{techno.join(", ")}</span>
+                </p>
+              ) : null}
+
+              {description2 ? <p>{description2}</p> : null}
+            </div>
+          </div>
+          <div class="project_banner">
+            <Image src={banner} alt="XDD" />
+          </div>
+        </>
+      ) : null
+    }
   </main>
 </Layout>
+
+<style>
+  div.project_description {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4.8rem;
+
+    & > * {
+      width: 29rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    & > img {
+      height: auto;
+      object-fit: contain;
+      object-position: top;
+    }
+  }
+
+  div.project_banner {
+    display: grid;
+    align-items: center;
+    margin-bottom: 4.8rem;
+
+    & > img {
+      width: calc(100% + var(--paddingYLayout) * 2);
+      height: auto;
+      object-fit: contain;
+      margin-left: calc(-1 * var(--paddingYLayout));
+    }
+  }
+</style>

@@ -54,6 +54,17 @@ const projects = defineCollection({
       tasks: z.array(z.string()),
       heroImage: image().refine(() => true),
       heroImage_alt: z.string(),
+      //TODO : Optionnal à retirer
+      logo: image()
+        .refine(() => true)
+        .optional(),
+      description: z.string().optional(),
+      doneIn: z.string().optional(),
+      techno: z.array(z.string()).optional(),
+      banner: image()
+        .refine(() => true)
+        .optional(),
+      description2: z.string().optional(),
     }),
 });
 

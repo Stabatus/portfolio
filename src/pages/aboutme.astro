@@ -70,15 +70,30 @@ const words = [...skills, ...tools, ...skills, ...tools, ...skills, ...tools];
     <hr />
     <section class="misc">
       <PhotoITook
-        client:visible
         photo_i_took={photo_i_took}
         photo_i_took_title={photo_i_took_title}
       />
       <div class="misc_other">
         <LolRank lolRank={lolRank} />
         <SpotifyPlaylist />
-        <MiscLayout title="Instagram" link={instagram} />
-        <MiscLayout title="Contact me" link={`mailto:${email}`} />
+        <MiscLayout title="Instagram" link={instagram}>
+          <Image
+            class="expertise__background"
+            src="/backgroundPerlin-white.png"
+            alt="background expertise item"
+            width={1920}
+            height={1080}
+          />
+        </MiscLayout>
+        <MiscLayout title="Contact me" link={`mailto:${email}`}>
+          <Image
+            class="expertise__background"
+            src="/backgroundPerlin-white.png"
+            alt="background expertise item"
+            width={1920}
+            height={1080}
+          />
+        </MiscLayout>
       </div>
     </section>
   </main>
@@ -128,6 +143,10 @@ const words = [...skills, ...tools, ...skills, ...tools, ...skills, ...tools];
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.6rem;
+    }
+
+    & .expertise__background {
+      opacity: 0.2;
     }
   }
 </style>

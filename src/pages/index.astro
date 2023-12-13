@@ -92,9 +92,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="project_highlight">
       {
         projectData.slice(0, 2).map(({ data }) => {
-          return (
-            <WorkHighlight {...data} />
-          );
+          return <WorkHighlight transition:animate={"initial"} {...data} />;
         })
       }
     </nav>
@@ -105,7 +103,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     />
 
     <hr />
-    <section class="aboutme" transition:animate="slide">
+    <section class="aboutme" transition:animate="initial">
       <div>
         <h3>{aboutMe_title}</h3>
         <p>{aboutMe_desc}</p>
@@ -126,10 +124,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="projects">
       {
         projectData.slice(2, 5).map(({ data }) => {
-          return (
-            <Work {...data}
-            />
-          );
+          return <Work {...data} />;
         })
       }
     </nav>
@@ -218,10 +213,6 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-
-function getEntry(arg0: string, arg1: string) {
-throw new Error("Function not implemented.");
-}
       width: 60ch;
     }
 
