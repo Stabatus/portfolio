@@ -92,17 +92,8 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="project_highlight">
       {
         projectData.slice(0, 2).map(({ data }) => {
-          const { title, subTitle, link, heroImage, timing, heroImage_alt } =
-            data;
           return (
-            <WorkHighlight
-              title={title}
-              link={link}
-              subTitle={subTitle}
-              heroImage={heroImage}
-              heroImage_alt={heroImage_alt}
-              timing={timing}
-            />
+            <WorkHighlight {...data} />
           );
         })
       }
@@ -135,14 +126,8 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="projects">
       {
         projectData.slice(2, 5).map(({ data }) => {
-          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
           return (
-            <Work
-              title={title}
-              subTitle={subTitle}
-              heroImage={heroImage}
-              timing={timing}
-              heroImage_alt={heroImage_alt}
+            <Work {...data}
             />
           );
         })

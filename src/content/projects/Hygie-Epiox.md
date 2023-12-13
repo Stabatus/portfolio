@@ -1,6 +1,7 @@
 ---
 title: Hygie Epiox
 subTitle: Refonte de l'application web
+link: hygie-epiox
 
 post: Designer & Developer
 timing: 2019 - Maintenant

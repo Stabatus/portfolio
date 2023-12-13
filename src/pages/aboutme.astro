@@ -63,16 +63,7 @@ const words = [...skills, ...tools, ...skills, ...tools, ...skills, ...tools];
     <nav class="projects">
       {
         projectData.map(({ data }) => {
-          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
-          return (
-            <Work
-              title={title}
-              subTitle={subTitle}
-              heroImage={heroImage}
-              timing={timing}
-              heroImage_alt={heroImage_alt}
-            />
-          );
+          return <Work {...data} />;
         })
       }
     </nav>

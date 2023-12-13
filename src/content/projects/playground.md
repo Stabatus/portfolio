@@ -1,6 +1,7 @@
 ---
-title: Plaground
+title: Playground
 subTitle: Travaux pour le fun
+link: playground
 
 tasks: [UI/UXDesign, Branding, logotype]
 heroImage: /public/playground/hero.png

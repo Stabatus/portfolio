@@ -13,7 +13,7 @@ interface Props
 const { title, link, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
 ---
 
-<a href="#">
+<a href={link ?? "#"}>
   <section>
     <div class="section_gradientBackground"></div>
     <Image

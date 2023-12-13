@@ -1,11 +1,14 @@
 ---
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import HeaderProjectLayout from "../layouts/HeaderProjectLayout.astro";
 
 export function getStaticPaths() {
   return [
     { params: { ProjectName: "hygie-epiox-mobile" } },
     { params: { ProjectName: "hygie" } },
+    { params: { ProjectName: "hygie-epiox" } },
+    { params: { ProjectName: "owltrip" } },
     { params: { ProjectName: "playground" } },
   ];
 }
@@ -18,16 +21,34 @@ if (!HEMData) {
   return Astro.redirect("/");
 }
 
-const { title, subTitle } = HEMData["data"];
+const {
+  title,
+  subTitle,
+  heroImage,
+  timing,
+  heroImage_alt,
+  tasks,
+  post,
+  jobType,
+} = HEMData["data"];
+
+const HeaderProjectLayoutProps = {
+  title,
+  subTitle,
+  heroImage,
+  heroImage_alt,
+  tasks,
+  post,
+  timing,
+  jobType,
+};
 ---
 
 <Layout
   title={`${title} - Ruben Letist - Digital Creative`}
   description="Cas d'étude de la création d'une application mobile pour Hygie, une société de développement de logiciel de facturation infirmier"
 >
-  <header>
-    <h1>{title}</h1>
-  </header>
+  <HeaderProjectLayout {...HeaderProjectLayoutProps} />
   <main>
     <p>{subTitle}</p>
   </main>

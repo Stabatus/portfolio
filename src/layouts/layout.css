@@ -5,6 +5,7 @@
   --grey-dark-color: hsla(2, 17%, 33%, 1);
   --beige-color: hsla(28, 41%, 55%, 1);
   --hero-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --hero-Grey-color: hsla(0, 0%, 14%, 1);
   background-color: hsl(var(--white-color));
   font-family: "azo-sans-web", sans-serif;
   font-size: 62.5%;
