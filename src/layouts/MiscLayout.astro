@@ -1,0 +1,45 @@
+---
+interface Props {
+  link: string;
+  title: string;
+}
+
+const { link, title } = Astro.props;
+---
+
+<div class="miscLayout">
+  <a href={link} target="_blank">
+    <slot />
+    <h3>
+      {title}
+    </h3>
+  </a>
+</div>
+
+<style>
+  div.miscLayout {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 2.4rem;
+
+    background-color: var(--grey-color);
+
+    & a {
+      position: relative;
+      display: block;
+      height: 100%;
+      width: 100%;
+
+      & h3 {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 1.6rem;
+        right: 2.4rem;
+        color: var(--white-color);
+      }
+    }
+  }
+</style>

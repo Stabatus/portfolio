@@ -10,10 +10,10 @@ interface Props
   link?: string;
 }
 
-const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
+const { title, link, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
 ---
 
-<a href="#">
+<a href={link ?? "#"}>
   <section>
     <div class="section_gradientBackground"></div>
     <Image
@@ -28,11 +28,7 @@ const { title, subTitle, heroImage, heroImage_alt, timing } = Astro.props;
       <p>{subTitle}</p>
       {timing ? <p>{timing}</p> : null}
     </div>
-    <Image
-      class="hero-image"
-      src={heroImage}
-      alt={heroImage_alt}
-    />
+    <Image class="hero-image" src={heroImage} alt={heroImage_alt} />
   </section>
 </a>
 

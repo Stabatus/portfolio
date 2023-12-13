@@ -15,7 +15,7 @@ const { photo_i_took, photo_i_took_title } = Astro.props;
   <div class="misc_photo_galerie">
     {
       photo_i_took.map((image, index) => {
-        const IMAGE_WIDTH = 500;
+        const IMAGE_WIDTH = 900;
         return (
           <Image
             src={image}
@@ -31,15 +31,6 @@ const { photo_i_took, photo_i_took_title } = Astro.props;
     <div class="bg_gradient"></div>
     <h3>{photo_i_took_title}</h3>
     <ul class="misc_photo_nav">
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            name="photo_fullscreen"
-            value="0"
-          />
-        </label>
-      </li>
       {
         Array(photo_i_took.length)
           .fill(null)
@@ -107,10 +98,6 @@ const { photo_i_took, photo_i_took_title } = Astro.props;
   }
 
   startInterval();
-
-  const photoFullscreen = selectOne<HTMLInputElement>(
-    "input['name=photo_fullscreen']"
-  )!;
 </script>
 
 <style>

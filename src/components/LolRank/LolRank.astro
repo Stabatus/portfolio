@@ -10,10 +10,7 @@ const { lolRank } = Astro.props;
 ---
 
 <div class="lolRank">
-  <a
-    href={lolRank[1]}
-    target="_blank"
-  >
+  <a href={lolRank[1]} target="_blank">
     <Image
       class="expertise__background"
       src="/backgroundPerlin-white.png"
@@ -25,8 +22,8 @@ const { lolRank } = Astro.props;
       src="/home/emblem-emerald.png"
       alt="emblem emerald"
       class="emblem-emerald"
-      width={256 * 5}
-      height={144 * 5}
+      width={256 * 4}
+      height={144 * 4}
     />
     <h3>
       {lolRank[0]}
@@ -48,28 +45,33 @@ const { lolRank } = Astro.props;
       rgb(32, 151, 107) 45%,
       rgb(7, 77, 51) 90%
     );
-    
+
     & a {
-        position: relative;
-        display: block;
-        height: 100%;
-        width: 100%;
-      }
+      position: relative;
+      display: block;
+      height: 100%;
+      width: 100%;
 
-      & h3 {
-        margin: 0;
-        padding: 0;
+      & .emblem-emerald {
         position: absolute;
-        bottom: 1.6rem;
-        right: 2.4rem;
-        color: var(--white-color);
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        transition: scale 350ms ease-out;
       }
 
-    & .emblem-emerald {
+      &:hover .emblem-emerald {
+        scale: 1.2;
+      }
+    }
+
+    & h3 {
+      margin: 0;
+      padding: 0;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      bottom: 1.6rem;
+      right: 2.4rem;
+      color: var(--white-color);
     }
 
     & .expertise__background {

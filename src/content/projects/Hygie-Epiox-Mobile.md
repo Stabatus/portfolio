@@ -1,5 +1,7 @@
 ---
 title: Hygie Epiox Mobile
+link: hygie-epiox-mobile
+
 subTitle: Refonte de l'application mobile
 
 post: Designer & Developer

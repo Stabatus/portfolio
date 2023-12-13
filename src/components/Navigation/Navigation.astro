@@ -9,22 +9,14 @@ const credentials = (await getCollection("credentials"))[0].data;
   </a>
   <nav>
     <a href="#">Curriculum vitae</a>
-    <a
-      href={credentials.instagram}
-      target="_blank"
-      >Instagram</a
-    >
-    <a
-      href={credentials.linkedin}
-      target="_blank"
-      >Linkedin</a
-    >
+    <a href={credentials.instagram} target="_blank">Instagram</a>
+    <a href={credentials.linkedin} target="_blank">Linkedin</a>
   </nav>
 </section>
 
 <style>
   section.nav_container {
-    position:fixed;
+    position: fixed;
     top: 1.6rem;
     left: 50%;
     translate: -50% 0;
@@ -37,6 +29,8 @@ const credentials = (await getCollection("credentials"))[0].data;
     align-items: center;
     justify-content: space-between;
     padding: 1.6rem 0;
+
+    z-index: 999;
 
     & a:has(strong) {
       color: var(--colorText);

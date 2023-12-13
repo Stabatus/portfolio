@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import { getEntries } from "astro:content";
+import { slide } from "astro:transitions";
+import { getEntries, getEntry } from "astro:content";
 import ParodyCertified from "@/comp/ParodyCertified/ParodyCertified.astro";
 import WorkHighlight from "@/comp/WorkHighlight/WorkHighlight.astro";
 import Work from "@/comp/Work/Work.astro";
@@ -10,7 +10,7 @@ import InfiniteLoop from "@/comp/InfiniteLoop/InfiniteLoop.astro";
 import { Image } from "astro:assets";
 import ExperienceSection from "../components/ExperienceSection/ExperienceSection.astro";
 
-const homeEntries = await getCollection("home");
+const homeEntries = await getEntry("home", "home");
 
 const {
   title,
@@ -26,15 +26,15 @@ const {
   expertise,
   skills,
   skills_indevelopment,
-  tools
-} = homeEntries[0].data;
+  tools,
+} = homeEntries.data;
 
 const projectData = await getEntries(relatedProject);
 
 const lastDayPublish = new Intl.DateTimeFormat("fr-FR", {
   year: "numeric",
   month: "long",
-  day: "numeric"
+  day: "numeric",
 }).format(lastUpdate);
 
 const randomNumbers: number[] = [];
@@ -55,7 +55,7 @@ const words = [
   ...skills_indevelopment,
   ...tools,
   ...skills,
-  ...skills_indevelopment
+  ...skills_indevelopment,
 ];
 
 const firstStack = randomNumbers.slice(0, 3) as [number, number, number];
@@ -92,10 +92,12 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
     <nav class="project_highlight">
       {
         projectData.slice(0, 2).map(({ data }) => {
-          const { title, subTitle, heroImage, timing, heroImage_alt } = data;
+          const { title, subTitle, link, heroImage, timing, heroImage_alt } =
+            data;
           return (
             <WorkHighlight
               title={title}
+              link={link}
               subTitle={subTitle}
               heroImage={heroImage}
               heroImage_alt={heroImage_alt}
@@ -106,12 +108,13 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       }
     </nav>
     <TestimonialsContainer
+      transition:animate={slide({ duration: 350 })}
       testimonials={testimonials}
       randomNumberStack={secondStack}
     />
 
     <hr />
-    <section class="aboutme">
+    <section class="aboutme" transition:animate="slide">
       <div>
         <h3>{aboutMe_title}</h3>
         <p>{aboutMe_desc}</p>
@@ -120,6 +123,7 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       <Image
         src={aboutMe_pic[0]}
         alt={aboutMe_pic[1]}
+        transition:animate="slide"
       />
     </section>
 
@@ -229,6 +233,10 @@ const secondStack = randomNumbers.slice(3, 6) as [number, number, number];
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
+
+function getEntry(arg0: string, arg1: string) {
+throw new Error("Function not implemented.");
+}
       width: 60ch;
     }
 
