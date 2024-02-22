@@ -2,7 +2,7 @@
   --white-color: hsl(0, 0%, 100%);
   --black-color: hsla(3, 100%, 8%, 1);
   --grey-color: hsl(0, 0%, 28%);
-  --text-color: hsl(0, 1%, 32%);
+  --text-color: hsl(0deg 0% 10.38%);
   --grey-dark-color: hsla(2, 17%, 33%, 1);
   --beige-color: hsla(28, 41%, 55%, 1);
   --hero-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);

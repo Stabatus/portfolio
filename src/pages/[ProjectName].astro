@@ -36,7 +36,7 @@ const { title, logo, banner, description, doneIn, techno, description2 } =
       ProjectName != "playground" ? (
         <>
           <div class="project_description">
-            <Image src={logo} alt={`Logo de ${title}`} />
+            <Image src={logo!} alt={`Logo de ${title}`} />
             <p>{description}</p>
             <div>
               {doneIn ? (
@@ -58,7 +58,7 @@ const { title, logo, banner, description, doneIn, techno, description2 } =
             </div>
           </div>
           <div class="project_banner">
-            <Image src={banner} alt="XDD" />
+            <Image src={banner!} alt="XDD" />
           </div>
         </>
       ) : null
